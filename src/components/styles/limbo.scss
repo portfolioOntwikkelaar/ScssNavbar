@@ -1,0 +1,124 @@
+:root {
+  --reveal: hsl(0, 100%, 50%);
+  --whatisit: hsla(180, 100%, 50%, .35);
+  --overlay-blend: multiply;
+  --overlay-opacity: .8;
+}
+
+/* Create a "lens" that consists of a red circle and a blend mode of multiply... once blended with anything below that is cyan, then the red of this element and the cyan on the layer below will multiply and be effectively black */
+.revealer {
+  --x: 0vw;
+  --y: 50vmin;
+  width: 50vmin;
+  height: 50vmin;
+  position: absolute;
+  top: 0;
+  left: 0vw;
+  transform: translate(calc(var(--x) - 25vmin), calc(var(--y) - 40vmin));
+  border-radius: 50%;
+  border: 1.5vmin solid black;
+  
+  background: var(--reveal);
+  
+  mix-blend-mode: var(--overlay-blend);
+  opacity: var(--overlay-opacity);
+}
+
+
+/* Take a black/dark pencil/ink drawing on white paper... */
+.hidden {
+  width: 100%;
+  height: 100vh;
+  background: #fff center center no-repeat;
+/*   background-image: 
+    radial-gradient(circle, #fff, transparent 10%),
+    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/61811/signsofsatx1.jpg);
+  background-size: auto auto, contain; */
+  opacity: .75;
+}
+
+.hidden::before {
+  background: #fff center center no-repeat;
+  background-image: 
+    radial-gradient(circle, #fff, transparent 10%),
+    url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/61811/signsofsatx1.jpg);
+  background-size: auto auto, contain;
+  filter: grayscale(100%);
+  opacity: 1;
+}
+
+/* ... and blend it with a block of cyan to make the pencil/ink lines cyan */
+.hidden::before,
+.hidden::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.hidden::after {
+  background: hsla(180, 100%, 50%, 1);
+  mix-blend-mode: screen;
+  z-index: 1;
+}
+.noise {
+  --start: 5px;
+  --end: 7px;
+  background: 
+    repeating-linear-gradient(155deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--reveal) var(--start), 
+      var(--reveal) var(--end)),
+    repeating-linear-gradient(115deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--reveal) var(--start), 
+      var(--reveal) var(--end)),
+    repeating-linear-gradient(45deg,
+      transparent 0, 
+      transparent var(--start), 
+      var(--reveal) var(--start), 
+      var(--reveal) var(--end));
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  alignItems: center;
+  justifyItems: center;
+  color: var(--reveal);
+  opacity: .5;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  perspective: 1000px;
+  
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/*
+body > * {
+  transform: rotateX(0deg) var(--tz);
+}
+
+body > *:first-child {
+  --tz: translateZ(-50px);
+}
+body > *:nth-child(2) {
+  --tz: translateZ(-25px);
+}
+body > *:nth-child(3) {
+  --tz: translateZ(0px);
+}
+/**/

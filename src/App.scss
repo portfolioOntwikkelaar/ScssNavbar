@@ -4,9 +4,45 @@
 * {
 margin: 0;
 padding: 0;
-font-family: 'Shizuru';
+
 }
 body {
   background: linear-gradient(to right, #870000, #190a05);
   // background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+}
+.sum {
+  display: flex;
+  justify-content: space-between;
+  
+  align-items: center;
+  background-color: #190a05;
+  font-family: 'Shizuru';
+
+  .logo {
+    margin-left: 1rem;
+    color: azure;
+    font-size: 50px;
+    font-weight: bolder;
+  }
+  .item {
+    display: flex;
+    
+    .ul {
+      display: flex;
+      margin: 25px;
+      li {
+        
+        margin: 0 1rem;
+        a {text-decoration: none;
+           color: aliceblue;
+           font-weight: bolder;
+        }
+      }
+    }
+
+  }
+
 }
